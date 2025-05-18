@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Banking App Onboarding & eKYC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #004085;
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    input, select {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .step {
+      margin-bottom: 30px;
+    }
+    .submit-btn {
+      background: #007bff;
+      color: white;
+      padding: 12px;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      margin-top: 20px;
+    }
+    .submit-btn:hover {
+      background: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Customer Onboarding & eKYC</h2>
+    {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-warning" role="alert" style="color: red; font-style: italic; font-weight: bold; margin-bottom: 15px;">
+      {% for message in messages %}
+        {{ message }}
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+    <form action="/onboarding-ekyc" method="POST" enctype="multipart/form-data">
+      
+      <!-- Step 1: Basic Info -->
+      <div class="step">
+        <h3>Step 1: Basic Information</h3>
+        <label for="full_name">Full Name</label>
+        <input type="text" name="full_name" value="{{ full_name or '' }}" required>
+
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" value="{{ email or '' }}" required>
+
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" name="phone" value="{{ phone or '' }}" required>
+      </div>
+
+      <!-- Step 2: Address -->
+      <div class="step">
+        <h3>Step 2: Address</h3>
+        <label for="address">Street Address</label>
+        <input type="text" id="address" name="address" value="{{ address or '' }}"required>
+
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" value="{{ city or '' }}" required>
+
+        <label for="zip">ZIP Code</label>
+        <input type="text" id="zip" name="zip" value="{{ zip or '' }}" required>
+      </div>
+
+      <!-- Step 3: Upload ID -->
+      <div class="step">
+        <h3>Step 3: Upload ID Document</h3>
+        <label for="id_type">ID Type</label>
+        <select id="id_type" name="id_type" required>
+          <option value="">Select</option>
+          <option value="passport">Passport</option>
+          <option value="aadhaar">Aadhaar Card</option>
+          <option value="license">Driver's License</option>
+        </select>
+
+        <label for="id_upload">Upload ID Document (PDF/JPG)</label>
+        <input type="file" id="id_upload" name="id_upload" accept=".jpg,.jpeg,.png,.pdf" required>
+      </div>
+
+      <!-- Step 4: eKYC Selfie -->
+      <div class="step">
+        <h3>Step 4: Take a Selfie for eKYC</h3>
+        <label for="selfie_upload">Upload Selfie</label>
+        <input type="file" id="selfie_upload" name="selfie_upload" accept="image/*" capture="user" required>
+      </div>
+
+      <button type="submit" class="submit-btn">Complete Onboarding</button>
+    </form>
+  </div>
+</body>
+</html>
