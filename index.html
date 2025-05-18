@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Credit Risk Assessment</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/static/background.png');
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 15px 0px;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            justify-content: space-between;
+        }
+
+        .navbar .logo {
+            height: 40px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            padding: 10px;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 5px;
+        }
+
+        /* Main Container */
+        .container {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 550px;
+            text-align: center;
+            margin-top: 80px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-top: 10px;
+        }
+
+        input, select, button {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Chatbot Styling */
+        #chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #31321d;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        #chatbot-container {
+            display: none;
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 300px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        #chatbot-header {
+            background: #007BFF;
+            color: white;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        #chatbot-close {
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        #chatbot-body {
+            max-height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .chatbot-message {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+        }
+
+        .chatbot-message.bot {
+            background: #f1f1f1;
+            text-align: left;
+        }
+
+        .chatbot-message.user {
+            background: #007BFF;
+            color: white;
+            text-align: right;
+        }
+
+        #chatbot-input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ccc;
+        }
+
+        #quick-questions button, #voice-buttons button, #clear-chat {
+            width: calc(100% - 20px);
+            margin: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <img src="/static/static/logo.png" alt="Logo" class="logo">
+        <div class="nav-links">
+            <a href="/credit-risk">Credit Risk Calculator</a>
+            <a href="/tax-calculator">Tax Calculator</a>
+            <a href="/credit-risk-charts">Credit Risk Charts</a>
+            <a href="/onboarding-ekyc">Create Account ></a>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <button id="chatbot-toggle">
+       <i class="fa-solid fa-headset"></i>
+    </button>
+    <div id="chatbot-container">
+        <div id="chatbot-header">
+            <strong>FinnovateX Chatbot</strong>
+            <span id="chatbot-close">×</span>
+        </div>
+        <div id="chatbot-body">
+            <div class="chatbot-message bot">Hello! I'm here to help with your questions about Credit Risk.</div>
+        </div>
+        <input type="text" id="chatbot-input" placeholder="Ask a question...">
+        <div id="quick-questions" style="margin-top: 10px;">
+            <p><strong>Quick Questions:</strong></p>
+            <button class="btn btn-sm btn-outline-primary mb-1" onclick="askQuestion('What is credit risk?')">What is credit risk?</button>
+            <button class="btn btn-sm btn-outline-primary mb-1" onclick="askQuestion('What factors affect credit risk?')">Factors affecting credit risk</button>
+            <button class="btn btn-sm btn-outline-primary mb-1" onclick="askQuestion('How can I reduce credit risk?')">How to reduce credit risk?</button>
+        </div>
+        <div id="voice-buttons" style="margin-top: 10px;">
+            <button class="btn btn-sm btn-outline-success mb-1" onclick="startVoiceInput()">🎤 Speak</button>
+            <button class="btn btn-sm btn-outline-danger mb-1" onclick="stopVoiceInput()">Stop</button>
+        </div>
+        <button id="clear-chat" class="btn btn-sm btn-danger mt-2">Clear Chat</button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+    // Render the chart using Chart.js
+    async function renderChart() {
+            const chartData = await fetchChartData();
+            const ctx = document.getElementById('creditRiskChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'line', // You can change this to 'bar', 'pie', etc.
+                data: {
+                    labels: chartData.labels, // e.g., ["Jan", "Feb", "Mar", "Apr", "May"]
+                    datasets: [{
+                        label: 'Credit Risk Scores',
+                        data: chartData.data, // e.g., [300, 450, 200, 600, 350]
+                        backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                        borderColor: 'rgba(0, 123, 255, 1)',
+                        borderWidth: 2,
+                        fill: true,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            title: {
+                                display: true,
+                                text: 'Credit Risk Score'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Month'
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        },
+                        title: {
+                            display: true,
+                            text: 'Credit Risk Trends Over Time'
+                        }
+                    }
+                }
+            });
+        }
+
+        // Call the renderChart function when the page loads
+        window.onload = renderChart;
+        // Chatbot Logic
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const chatbotBody = document.getElementById('chatbot-body');
+        const chatbotInput = document.getElementById('chatbot-input');
+
+        let recognition; // For speech-to-text
+
+        // Close chatbot when the close button is clicked
+        document.getElementById('chatbot-close').addEventListener('click', () => {
+            chatbotContainer.style.display = 'none';
+        });
+
+        // Toggle chatbot visibility
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.style.display = chatbotContainer.style.display === 'none' ? 'block' : 'none';
+        });
+
+        // Quick questions
+        function askQuestion(question) {
+            chatbotInput.value = question;
+            chatbotInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
+        }
+
+        // Clear chat history
+        document.getElementById('clear-chat').addEventListener('click', () => {
+            chatbotBody.innerHTML = '<div class="chatbot-message bot">Hello! I\'m here to help with your questions about Credit Risk.</div>';
+        });
+
+        // Chatbot input handler
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const userMessage = chatbotInput.value.trim();
+                if (userMessage) {
+                    // Display user message
+                    chatbotBody.innerHTML += `<div class="chatbot-message user">${userMessage}</div>`;
+                    chatbotInput.value = '';
+
+                    // Show typing indicator
+                    chatbotBody.innerHTML += `<div class="chatbot-message bot typing-indicator">Typing...</div>`;
+                    chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+                    // Simulate bot response after a delay
+                    setTimeout(() => {
+                        // Remove typing indicator
+                        document.querySelector('.typing-indicator').remove();
+
+                        // Add bot response
+                        const botResponse = getBotResponse(userMessage);
+                        chatbotBody.innerHTML += `<div class="chatbot-message bot">${botResponse}</div>`;
+                        chatbotBody.scrollTop = chatbotBody.scrollHeight;
+
+                        // Speak the bot's response
+                        speak(botResponse);
+                    }, 1000); // 1-second delay
+                }
+            }
+        });
+
+        // Bot response logic
+        function getBotResponse(userMessage) {
+            const responses = {
+                "hello": "Hello! How can I assist you with credit risk today?",
+                "what is credit risk": "Credit risk is the possibility that a borrower will fail to repay a loan or meet contractual obligations.",
+                "factors affecting credit risk": "Factors include credit history, debt-to-income ratio, payment behavior, economic conditions, and collateral value.",
+                "how can i reduce credit risk": "You can reduce credit risk by improving your credit score, diversifying investments, and monitoring borrowers’ financial health.",
+                "what is a credit score": "A credit score is a numerical representation of your creditworthiness, based on your credit history.",
+                "how is credit risk assessed": "Credit risk is assessed using credit scores, financial statements, payment history, and risk models like FICO or Basel.",
+                "what are the types of credit risk": "Types include default risk, concentration risk, and country risk.",
+                "does late payment affect credit risk": "Yes, late payments increase credit risk by lowering your credit score and signaling unreliability.",
+                "what is default risk": "Default risk is the chance that a borrower will fail to make required payments on a debt.",
+                "how do banks manage credit risk": "Banks use credit scoring, loan diversification, collateral, and risk-based pricing to manage credit risk.",
+                "what is a good credit score": "A good credit score typically ranges from 670 to 850, depending on the scoring model like FICO.",
+                "can credit risk be eliminated": "No, credit risk cannot be fully eliminated, but it can be mitigated through careful management.",
+                "what is collateral in credit risk": "Collateral is an asset pledged by a borrower to secure a loan, reducing the lender’s risk if the borrower defaults.",
+                "how does income affect credit risk": "Higher income generally lowers credit risk by improving a borrower’s ability to repay debts.",
+                "what is credit risk modeling": "Credit risk modeling uses statistical techniques to predict the likelihood of default or loss.",
+                "how does economic downturn affect credit risk": "Economic downturns increase credit risk by reducing borrowers’ ability to repay due to job loss or lower income.",
+                "what is a credit report": "A credit report is a detailed record of your credit history, used by lenders to assess credit risk.",
+                "how often should i check my credit score": "You should check your credit score at least once a year or before applying for major loans.",
+                "what is the role of interest rates in credit risk": "Higher interest rates can increase credit risk by making debt repayment more challenging for borrowers.",
+                "can bad credit be fixed": "Yes, bad credit can be improved by paying bills on time, reducing debt, and correcting errors on your credit report.",
+                "what is credit risk mitigation": "Credit risk mitigation involves strategies like requiring collateral, insurance, or hedging to reduce potential losses.",
+                "default": "I'm sorry, I don't understand. Can you please rephrase your question?"
+            };
+
+            // Convert user message to lowercase for case-insensitive matching
+            const lowerCaseMessage = userMessage.toLowerCase();
+
+            // Check if the user's message matches any key in the responses object
+            for (const key in responses) {
+                if (lowerCaseMessage.includes(key)) {
+                    return responses[key];
+                }
+            }
+
+            // If no match is found, return the default response
+            return responses["default"];
+        }
+
+        // Text-to-Speech (TTS)
+        function speak(text) {
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            speechSynthesis.speak(utterance);
+        }
+
+        // Speech-to-Text (STT)
+        function startVoiceInput() {
+            recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.start();
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                chatbotInput.value = transcript;
+                chatbotInput.dispatchEvent(new KeyboardEvent('keypress', { key: 'Enter' }));
+            };
+
+            recognition.onerror = (event) => {
+                console.error('Speech recognition error:', event.error);
+            };
+        }
+
+        function stopVoiceInput() {
+            if (recognition) {
+                recognition.stop();
+            }
+        }
+    </script>
+</body>
+</html>
+
