@@ -3,13 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Credit Risk Assessment</title>
+    <title>Finovia - Home</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Fonts for Papyrus -->
+    <link href="https://fonts.googleapis.com/css2?family=Papyrus&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-image: url('/static/static/background.png');
+            background-image: url("https://img.freepik.com/premium-vector/blue-digital-technology-background-with-white-building-logo-bank_666034-682.jpg");
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -17,6 +21,25 @@
             height: 100vh;
             flex-direction: column;
             margin: 0;
+        }
+        
+        .navbar-brand {
+            font-family: 'Papyrus', sans-serif; /* Fallback for Copperplate Gothic Light */
+            font-size: 1.8rem;
+            font-weight: 400;
+            color: #333 !important;
+        }
+        .logo-placeholder {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        .nav-link {
+            font-size: 1.1rem;
+            margin-left: 15px;
+            color: #333 !important;
         }
 
         /* Navigation Bar */
@@ -57,13 +80,14 @@
 
         /* Main Container */
         .container {
-            background: rgba(255, 255, 255, 0.9);
+           
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             width: 550px;
             text-align: center;
             margin-top: 80px;
+            
         }
 
         h2 {
@@ -96,12 +120,130 @@
             background-color: #0056b3;
         }
 
+                /* Search bar styling */
+        .search-container {
+            justify-content: center; /* Center search bar */
+            margin: 0 1rem; /* Space between logo and toggler */
+        }
+        .search-bar {
+            width: 100%; /* Fill container */
+            max-width: 500px; /* Limit max width */
+            padding: 0.5rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 25px;
+            font-size: 0.9rem;
+        }
+        .search-bar::placeholder {
+            color: #999;
+            opacity: 1;
+        }
+        .fade-placeholder {
+            animation: fadeInOut 3s infinite;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        /* Welcome section styling */
+        .welcome-section {
+            text-align: center;
+            margin: 2rem auto;
+            max-width: 800px;
+            margin-right: 10px;
+        }
+        .welcome-section h2 {
+            font-size: 2rem;
+            color: #d3e4ea;
+        }
+        .welcome-section p {
+            font-size: 1.1rem;
+            color: #3aa9dc;
+        }
+        /* Slideshow card styling */
+        .carousel-card {
+            max-width: 400px;
+            margin: 2rem auto;
+            margin-right: 90px;
+        }
+        .carousel-item {
+            height: 200px;
+            display: flex;
+            border-radius: 0.375rem;
+            background: #b7dcff; /* Unified background */
+            overflow: hidden;
+            text-decoration: none; /* No link underline */
+        }
+        .carousel-item:hover {
+            opacity: 0.9; /* Hover effect */
+        }
+        .carousel-text {
+            flex: 1; /* Half width */
+            padding: 0.5rem 1rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .carousel-text h5 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .carousel-text p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .carousel-image {
+            flex: 1; /* Half width */
+            height: 200px;
+        }
+        .carousel-item.active{
+            display: flex;
+        }
+        .carousel-item:not(.active) {
+            display: none;
+        }
+        .carousel-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Carousel control arrows */
+        .carousel-control-prev,
+        .carousel-control-next {
+            width: 10%;
+            background: rgba(0, 0, 0, 0.3);
+            height: 50px;
+            top: 50%;
+            transform: translateY(-50%);
+            border-radius: 0.375rem;
+        }
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-size: 50%;
+            filter: invert(1);
+        }
+        /* Responsive adjustments */
+        @media (max-width: 991px) {
+            .search-container {
+                margin: 0.5rem 0;
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .search-bar {
+                width: 100%;
+                max-width: none; /* Full width on mobile */
+            }
+            .navbar-brand {
+                flex-grow: 0;
+            }
+        }
+
         /* Chatbot Styling */
         #chatbot-toggle {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            background-color: #31321d;
+            background-color: #a2c7ec;
             color: white;
             border: none;
             border-radius: 50%;
@@ -171,20 +313,136 @@
             width: calc(100% - 20px);
             margin: 5px 10px;
         }
+        .nav-link {
+            font-size: 1.1rem;
+            margin-left: 15px;
+            color: #333 !important;
+            transition: border 0.2s, background 0.2s;
+            
+            border-radius: 6px;
+        }
+        .nav-link:hover, .nav-link:focus {
+            border-bottom: 2px solid #2bc2c2;
+            color:#2bc2c2 !important;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <img src="/static/static/logo.png" alt="Logo" class="logo">
-        <div class="nav-links">
-            <a href="/credit-risk">Credit Risk Calculator</a>
-            <a href="/tax-calculator">Tax Calculator</a>
-            <a href="/credit-risk-charts">Credit Risk Charts</a>
-            <a href="/onboarding-ekyc">Create Account ></a>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{{ url_for('home') }}">
+                <span class="logo-placeholder"><img src="../static/logo.jpg" width="40px" height="40px"></span> Finovia
+            </a>
+            <div class="search-container">
+                <input type="text" class="search-bar" id="searchBar" placeholder="How can we help you today?" >
+                
+            </div>
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/credit-risk">Credit Risk Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/tax-calculator">Tax Calculator</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/credit-risk-charts">Credit Risk Charts</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link create-account" href="/onboarding-ekyc">Create Account</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+ 
+
+    <!-- Welcome Section -->
+    <div class="container welcome-section">
+        <h2>Welcome to Finovia</h2>
+        <p>Discover powerful financial tools to manage your credit risk, taxes, and more.</p>
+    </div>
+
+    <!-- Slideshow Card -->
+    <div class="carousel-card card">
+        <div id="finoviaCarousel" class="carousel slide"  >
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <a href="/credit-risk"  class="d-flex">
+                    <div class="carousel-text">
+                        <h5>Credit Risk Calculator</h5>
+                        <p>Assess your loan eligibility in seconds. Plan smarter today!</p>
+                    </div>
+                    <div class="carousel-image">
+                        <img src="https://media.istockphoto.com/id/526555752/photo/acceptable-level-of-risk.jpg?s=612x612&w=0&k=20&c=9xDoTJuRR8j2T1UFCjo3iYqztGtVV0Wod635PqQfu2M=" 
+                        alt="Slide 1" 
+                        class="object-fit-cover">
+                    </div>
+                   
+                </a>
+                </div>
+                <div class="carousel-item">
+                <a href="/tax-calculator" class="d-flex">
+                    <div class="carousel-text">
+                        <h5>Tax Calculator</h5>
+                        <p>Simplify your taxes. Calculate income tax or GST instantly!</p>
+                    </div>
+                    <div class="carousel-image">
+                        <img 
+                        src="https://cm-cdn.creditmantri.com/community/article/what-is-the-formula-to-calculate-income-tax.jpg" 
+                        alt="Slide 2" 
+                        class="object-fit-cover"/>
+                    </div>
+                </a>
+                </div>
+                <div class="carousel-item">
+                <a href="/onboarding-ekyc" class="d-flex">
+                    <div class="carousel-text">
+                        <h5>Join Us Today</h5>
+                        <p>Unlock financial tools & exclusive deals. Sign up now!</p>
+                    </div>
+                    <div class="carousel-image">
+                        <img 
+                        src="https://media.istockphoto.com/id/1344872631/photo/portrait-of-a-group-of-confident-young-businesspeople-working-together-in-a-modern-office.jpg?s=612x612&w=0&k=20&c=_MdFKendqK0sN48ukiTmxPzP5GsoDn_E5Lo7RH6wFuU=" 
+                        alt="Slide 3"  class="object-fit-cover" />
+                    </div>
+                </a>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#finoviaCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#finoviaCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
     </div>
+
+    <!-- Bootstrap JS and custom script -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Search bar placeholder animation
+        const searchBar = document.getElementById('searchBar');
+        searchBar.addEventListener('focus', () => {
+            searchBar.classList.remove('fade-placeholder');
+            searchBar.placeholder = '';
+        });
+        searchBar.addEventListener('blur', () => {
+            if (!searchBar.value) {
+                searchBar.classList.add('fade-placeholder');
+                searchBar.placeholder = 'How can we help you today?';
+            }
+        });
+    </script>
 
     <!-- Chatbot -->
     <button id="chatbot-toggle">
@@ -399,4 +657,5 @@
     </script>
 </body>
 </html>
+
 
